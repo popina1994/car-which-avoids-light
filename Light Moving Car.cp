@@ -50,8 +50,6 @@ void init_pins () {
 
  UART3_Enable();
 
- USART3_CR1bits.RXNEIE = 1;
- USART3_CR1bits.TXEIE = 0;
 
 }
 

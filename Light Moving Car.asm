@@ -101,31 +101,19 @@ NOP
 NOP
 ;Light Moving Car.c,50 :: 		UART3_Enable();
 BL	_UART3_Enable+0
-;Light Moving Car.c,52 :: 		USART3_CR1bits.RXNEIE = 1;       // enable uart rx interrupt
-MOVS	R1, #1
-SXTB	R1, R1
-MOVW	R0, #lo_addr(USART3_CR1bits+0)
-MOVT	R0, #hi_addr(USART3_CR1bits+0)
-STR	R1, [R0, #0]
-;Light Moving Car.c,53 :: 		USART3_CR1bits.TXEIE = 0;        // enable uart tx interrupts
-MOVS	R1, #0
-SXTB	R1, R1
-MOVW	R0, #lo_addr(USART3_CR1bits+0)
-MOVT	R0, #hi_addr(USART3_CR1bits+0)
-STR	R1, [R0, #0]
-;Light Moving Car.c,55 :: 		}
+;Light Moving Car.c,53 :: 		}
 L_end_init_pins:
 LDR	LR, [SP, #0]
 ADD	SP, SP, #4
 BX	LR
 ; end of _init_pins
 _main:
-;Light Moving Car.c,59 :: 		void main() {
-;Light Moving Car.c,61 :: 		init_pins();
+;Light Moving Car.c,57 :: 		void main() {
+;Light Moving Car.c,59 :: 		init_pins();
 BL	_init_pins+0
-;Light Moving Car.c,62 :: 		init_timer2();
+;Light Moving Car.c,60 :: 		init_timer2();
 BL	_init_timer2+0
-;Light Moving Car.c,67 :: 		Delay_ms(500);
+;Light Moving Car.c,65 :: 		Delay_ms(500);
 MOVW	R7, #11518
 MOVT	R7, #305
 NOP
@@ -136,14 +124,14 @@ BNE	L_main3
 NOP
 NOP
 NOP
-;Light Moving Car.c,70 :: 		while(1) {
+;Light Moving Car.c,68 :: 		while(1) {
 L_main5:
-;Light Moving Car.c,71 :: 		asm wfi;
+;Light Moving Car.c,69 :: 		asm wfi;
 WFI
-;Light Moving Car.c,72 :: 		}
+;Light Moving Car.c,70 :: 		}
 IT	AL
 BAL	L_main5
-;Light Moving Car.c,73 :: 		}
+;Light Moving Car.c,71 :: 		}
 L_end_main:
 L__main_end_loop:
 B	L__main_end_loop

@@ -12,7 +12,7 @@ Value=0
 [USE_HEAP]
 Value=0
 [HEAP_SIZE]
-Value=0
+Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
@@ -114,7 +114,8 @@ File63=USB
 File64=Vectors
 [EXPANDED_NODES]
 Node0=Sources
-Count=1
+Node1=Output Files
+Count=2
 [PROGRAMMER_OPTIONS]
 Value=SWD
 [PROGRAMMER_TYPE]
