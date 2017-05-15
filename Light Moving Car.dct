@@ -27176,8 +27176,9 @@ ineptxsa9_otg_hs_dieptxf7_bit
 init
 init
 init_bit
-init_pins
 init_timer2
+initadc
+initdebugmode
 initf
 initf
 initf_bit
@@ -29517,6 +29518,7 @@ leu6_bit
 leu7
 leu7_bit
 lf
+lightval
 line_ie
 line_ie
 line_ie_bit
@@ -31274,6 +31276,7 @@ matrix_transpose16
 matrix_transpose32
 max
 max_files
+max_output
 mb
 mb
 mb
@@ -36500,6 +36503,7 @@ otgint_bit
 otgint_otg_fs_gintmsk_bit
 otgint_otg_hs_gintmsk_bit
 otgint_otg_hs_gintsts_bit
+output
 over8
 over8
 over8
