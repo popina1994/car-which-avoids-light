@@ -27178,7 +27178,6 @@ ineptxsa9_otg_hs_dieptxf7_bit
 init
 init
 init_bit
-init_timer2
 initadc
 initdebugmode
 initf
@@ -27188,6 +27187,7 @@ initpwm
 inits
 inits
 inits_bit
+inittimer3
 inrq
 inrq
 inrq
@@ -46095,7 +46095,7 @@ timeout_i2c2_sr1_bit
 timer_arr
 timer_psc
 timer_times
-timer2_interrupt
+timer3_interrupt
 tjtie
 tjtie
 tjtie_bit

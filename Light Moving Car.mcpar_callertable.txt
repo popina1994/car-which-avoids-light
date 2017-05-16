@@ -12,7 +12,7 @@ main
 							GPIO_Clk_Enable
 		UART3_Enable
 			UARTx_Enable
-	init_timer2
+	initTimer3
 		NVIC_IntEnable
 	initADC
 		GPIO_Analog_Input
@@ -26,18 +26,18 @@ main
 		PWM_TIM1_Init
 			PWM_TIMx_Init
 				Get_Fosc_kHz
-		PWM_TIM4_Init
+		PWM_TIM2_Init
 			PWM_TIMx_Init
 		PWM_TIM1_Set_Duty
 			PWM_TIMx_Set_Duty
-		PWM_TIM4_Set_Duty
+		PWM_TIM2_Set_Duty
 			PWM_TIMx_Set_Duty
 		PWM_TIM1_Start
 			PWM_TIMx_Start
 				GPIO_Alternate_Function_Enable
-		PWM_TIM4_Start
+		PWM_TIM2_Start
 			PWM_TIMx_Start
-Timer2_interrupt
+Timer3_interrupt
 	UART3_Tx_Idle
 		UARTx_Tx_Idle
 	IntToStr
