@@ -37,7 +37,7 @@ main
 				GPIO_Alternate_Function_Enable
 		PWM_TIM2_Start
 			PWM_TIMx_Start
-Timer3_interrupt
+interruptTimer3
 	UART3_Tx_Idle
 		UARTx_Tx_Idle
 	IntToStr

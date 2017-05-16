@@ -31,7 +31,7 @@ const int MAX_GEARS1 = 23;
 const int MAX_GEARS2 = 12;
 
 
-void Timer3_interrupt() iv IVT_INT_TIM3 {
+void interruptTimer3() iv IVT_INT_TIM3 {
  TIM3_SR.UIF = 0;
 
  if (UART3_Tx_Idle() == 1)

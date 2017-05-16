@@ -27193,6 +27193,7 @@ inrq
 inrq
 inrq_bit
 inrq_can1_mcr_bit
+interrupttimer3
 intid
 intid0
 intid0_bit
@@ -46095,7 +46096,6 @@ timeout_i2c2_sr1_bit
 timer_arr
 timer_psc
 timer_times
-timer3_interrupt
 tjtie
 tjtie
 tjtie_bit

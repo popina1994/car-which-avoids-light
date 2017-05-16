@@ -30,7 +30,7 @@ const int MAX_GEARS1 = 23;
 const int MAX_GEARS2 = 12;
 
 
-void Timer3_interrupt() iv IVT_INT_TIM3 {
+void interruptTimer3() iv IVT_INT_TIM3 {
   TIM3_SR.UIF = 0;
 
    if (UART3_Tx_Idle() == 1) //If data has been transmitted, send new data
@@ -68,7 +68,7 @@ void initTimer3(){
 
 void initDebugMode ()
 {
-     /* InitBluetoothUART3 */
+     // InitBluetoothUART3
      UART3_Init_Advanced(9600, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT, &_GPIO_MODULE_USART3_PD89);
      Delay_ms(1000);
      UART3_Enable();
@@ -92,7 +92,6 @@ void initPWM()
           
      PWM_TIM1_Start(_PWM_CHANNEL1, &_GPIO_MODULE_TIM1_CH1_PE9);
      PWM_TIM2_Start(_PWM_CHANNEL3, &_GPIO_MODULE_TIM2_CH3_PB10);
-//     _GPIO_MODULE_TIM
      Delay_ms(100);
 
 }

@@ -1,5 +1,5 @@
-_Timer3_interrupt:
-;Light Moving Car.c,33 :: 		void Timer3_interrupt() iv IVT_INT_TIM3 {
+_interruptTimer3:
+;Light Moving Car.c,33 :: 		void interruptTimer3() iv IVT_INT_TIM3 {
 SUB	SP, SP, #4
 STR	LR, [SP, #0]
 ;Light Moving Car.c,34 :: 		TIM3_SR.UIF = 0;
@@ -12,7 +12,7 @@ STR	R1, [R0, #0]
 BL	_UART3_Tx_Idle+0
 CMP	R0, #1
 IT	NE
-BNE	L_Timer3_interrupt0
+BNE	L_interruptTimer30
 ;Light Moving Car.c,44 :: 		IntToStr(-1, output);
 MOVW	R1, #lo_addr(_output+0)
 MOVT	R1, #hi_addr(_output+0)
@@ -28,12 +28,12 @@ BL	_UART3_Write_Text+0
 MOVW	R8, #5000
 SXTH	R8, R8
 ; i end address is: 32 (R8)
-L_Timer3_interrupt1:
+L_interruptTimer31:
 ; i start address is: 32 (R8)
 MOVW	R0, #50000
 CMP	R8, R0
 IT	CS
-BCS	L_Timer3_interrupt2
+BCS	L_interruptTimer32
 ;Light Moving Car.c,48 :: 		pwmPeriod1 =  PWM_TIM1_Init(i);
 SXTH	R0, R8
 BL	_PWM_TIM1_Init+0
@@ -57,16 +57,16 @@ SXTH	R8, R8
 ;Light Moving Car.c,52 :: 		}
 ; i end address is: 32 (R8)
 IT	AL
-BAL	L_Timer3_interrupt1
-L_Timer3_interrupt2:
+BAL	L_interruptTimer31
+L_interruptTimer32:
 ;Light Moving Car.c,53 :: 		}
-L_Timer3_interrupt0:
+L_interruptTimer30:
 ;Light Moving Car.c,55 :: 		}
-L_end_Timer3_interrupt:
+L_end_interruptTimer3:
 LDR	LR, [SP, #0]
 ADD	SP, SP, #4
 BX	LR
-; end of _Timer3_interrupt
+; end of _interruptTimer3
 _initTimer3:
 ;Light Moving Car.c,58 :: 		void initTimer3(){
 SUB	SP, SP, #4
