@@ -9535,6 +9535,8 @@ current8
 current8_bit
 current9
 current9_bit
+currentduty1
+currentduty2
 cwuf
 cwuf
 cwuf_bit
@@ -27182,6 +27184,7 @@ initdebugmode
 initf
 initf
 initf_bit
+initpwm
 inits
 inits
 inits_bit
@@ -31276,6 +31279,8 @@ matrix_transpose16
 matrix_transpose32
 max
 max_files
+max_gears1
+max_gears2
 max_output
 mb
 mb
@@ -37393,6 +37398,7 @@ pendsvclr_bit
 pendsvset
 pendsvset
 pendsvset_bit
+period_frequency
 perschivl
 perschivl0
 perschivl0_bit
@@ -40000,6 +40006,8 @@ pwm_tim9_init
 pwm_tim9_set_duty
 pwm_tim9_start
 pwm_tim9_stop
+pwmperiod1
+pwmperiod2
 pwr_cr
 pwr_crbits
 pwr_csr

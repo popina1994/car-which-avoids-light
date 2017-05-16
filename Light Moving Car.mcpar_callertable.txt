@@ -22,14 +22,27 @@ main
 		ADC1_Init
 			ADCx_Init
 				RCC_GetClocksFrequency
+	initPWM
+		PWM_TIM1_Init
+			PWM_TIMx_Init
+				Get_Fosc_kHz
+		PWM_TIM4_Init
+			PWM_TIMx_Init
+		PWM_TIM1_Set_Duty
+			PWM_TIMx_Set_Duty
+		PWM_TIM4_Set_Duty
+			PWM_TIMx_Set_Duty
+		PWM_TIM1_Start
+			PWM_TIMx_Start
+				GPIO_Alternate_Function_Enable
+		PWM_TIM4_Start
+			PWM_TIMx_Start
 Timer2_interrupt
 	UART3_Tx_Idle
 		UARTx_Tx_Idle
-	ADC1_Get_Sample
-		ADCx_Get_Sample
-			Delay_1us
 	IntToStr
 		WordToStr
 	UART3_Write_Text
 		UARTx_Write_Text
 			UARTx_Write
+	PWM_TIM1_Init

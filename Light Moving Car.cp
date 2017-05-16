@@ -22,15 +22,31 @@ int lightVal = -1;
 const int MAX_OUTPUT = 256;
 char output[MAX_OUTPUT];
 
+unsigned int currentDuty1;
+unsigned int currentDuty2;
+unsigned int pwmPeriod1;
+unsigned int pwmPeriod2;
+const int PERIOD_FREQUENCY = 50;
+const int MAX_GEARS1 = 23;
+const int MAX_GEARS2 = 12;
+
 
 void Timer2_interrupt() iv IVT_INT_TIM2 {
  TIM2_SR.UIF = 0;
 
  if (UART3_Tx_Idle() == 1)
  {
- lightVal = ADC1_Get_Sample(11);
- IntToStr(lightVal, output);
+#line 43 "C:/Users/popina/Documents/MIPS/Light Moving Car.c"
+ int i;
+ IntToStr(-1, output);
  UART3_Write_Text(output);
+ for (i = 5000; i < 50000; i += 5000)
+ {
+ pwmPeriod1 = PWM_TIM1_Init(i);
+ IntToStr(pwmPeriod1, output);
+ UART3_Write_Text(output);
+
+ }
  }
 
 }
@@ -60,9 +76,20 @@ void initADC()
  GPIO_Analog_Input(&GPIOC_BASE, _GPIO_PINMASK_1);
  ADC_Set_Input_Channel(_ADC_CHANNEL_11);
  ADC1_Init();
+}
 
+void initPWM()
+{
+ pwmPeriod1 = PWM_TIM1_Init(PERIOD_FREQUENCY);
+ pwmPeriod2 = PWM_TIM4_Init(PERIOD_FREQUENCY);
+ currentDuty1 = pwmPeriod1 / MAX_GEARS1;
+ currentDuty2 = pwmPeriod2 / MAX_GEARS2;
+ PWM_TIM1_Set_Duty(currentDuty1, _PWM_NON_INVERTED, _PWM_CHANNEL1);
+ PWM_TIM4_Set_Duty(currentDuty2, _PWM_NON_INVERTED, _PWM_CHANNEL1);
 
-
+ PWM_TIM1_Start(_PWM_CHANNEL1, &_GPIO_MODULE_TIM1_CH1_PE9);
+ PWM_TIM4_Start(_PWM_CHANNEL1, &_GPIO_MODULE_TIM4_CH1_PD12);
+ Delay_ms(100);
 
 }
 
@@ -72,14 +99,15 @@ void main() {
  initDebugMode();
  init_timer2();
  initADC();
+ initPWM();
 
 
 
 
- Delay_ms(500);
 
 
  while(1) {
  asm wfi;
+ Delay_ms(100);
  }
 }
