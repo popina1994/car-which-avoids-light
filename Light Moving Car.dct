@@ -4868,6 +4868,7 @@ byte37_bit
 bytetohex
 bytetostr
 bytetostrwithzeros
+calclightval
 calm
 calm0
 calm0_bit
@@ -7610,6 +7611,7 @@ cgonak
 cgonak
 cgonak_bit
 cgonak_otg_hs_dctl_bit
+changemode
 character8x7
 chdis
 chdis
@@ -8554,6 +8556,7 @@ cnt
 cnt
 cnt
 cnt
+cnt
 cnt_h
 cnt_h
 cnt_h
@@ -8898,8 +8901,6 @@ cnt9_tim6_cnt_bit
 cnt9_tim7_cnt_bit
 cnt9_tim8_cnt_bit
 cnt9_tim9_cnt_bit
-cntcircle
-cntmove
 code
 code
 code0
@@ -9488,6 +9489,7 @@ ctxpkt
 ctxpkt
 ctxpkt_bit
 ctxpkt_otg_hs_gusbcfg_bit
+curmaxlightvalue
 current
 current0
 current0_bit
@@ -14220,6 +14222,7 @@ epnum3_otg_hs_hcchar6_bit
 epnum3_otg_hs_hcchar7_bit
 epnum3_otg_hs_hcchar8_bit
 epnum3_otg_hs_hcchar9_bit
+epsilon
 eptyp
 eptyp
 eptyp
@@ -28159,6 +28162,7 @@ isrpending
 isrpending
 isrpending_bit
 isspace
+isstarted
 isupper
 isxdigit
 it4_rmp
@@ -29525,6 +29529,7 @@ leu7
 leu7_bit
 lf
 lightval
+lightvaluearr
 line_ie
 line_ie
 line_ie_bit
@@ -31283,9 +31288,11 @@ matrix_transpose32
 max
 max_files
 max_gears2
+max_light_val
 max_move_back
 max_move_circle
 max_output
+maxlightvalue
 mb
 mb
 mb
@@ -32497,8 +32504,10 @@ moe_tim8_bdtr_bit
 monitoract
 monitoract
 monitoract_bit
-moveback
-moveincircle
+move_mode_back
+move_mode_circle
+move_mode_search_light
+movemode
 mpe
 mpe
 mpe_bit
@@ -40323,6 +40332,7 @@ reset_
 reset_
 reset_bit
 reset_can1_mcr_bit
+resetlightmaxpar
 respcmd
 respcmd0
 respcmd0_bit
@@ -43555,6 +43565,7 @@ start_bit
 start_i2c1_cr1_bit
 start_i2c2_cr1_bit
 startleftwheel
+startmode
 startrightwheel
 stbiterr
 stbiterr
@@ -47856,6 +47867,7 @@ ulpiipd_bit
 unalign_trp
 unalign_trp
 unalign_trp_bit
+updatelightarray
 upfd
 upfd
 upfd_bit

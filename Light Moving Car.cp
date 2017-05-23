@@ -19,9 +19,14 @@ int timer_times[]={ 5, 20, 50, 100, 200, 500 };
 
 sbit LD1 at ODR12_GPIOE_ODR_bit;
 sbit LD2 at ODR15_GPIOE_ODR_bit;
+
+
+
 int lightVal = -1;
 const int MAX_OUTPUT = 256;
+const int MAX_LIGHT_VAL = 5;
 char output[MAX_OUTPUT];
+int lightValueArr[MAX_LIGHT_VAL] = {0};
 
 unsigned int currentDuty1;
 unsigned int currentDuty2;
@@ -29,15 +34,21 @@ unsigned int pwmPeriod1;
 unsigned int pwmPeriod2;
 const int PERIOD_FREQUENCY1 = 33;
 const int PERIOD_FREQUENCY2 = 50;
-const int MAX_GEARS2 = 9;
-const int MAX_MOVE_CIRCLE = 100;
-const int MAX_MOVE_BACK = 100;
+const int MAX_GEARS2 = 10;
+const int MAX_MOVE_CIRCLE = 400;
+const int MAX_MOVE_BACK = 400;
 
-int moveBack = 0;
-int moveInCircle = 0;
-int cntCircle = MAX_MOVE_CIRCLE;
-int cntMove = 0;
+const int MOVE_MODE_BACK = 0;
+const int MOVE_MODE_CIRCLE = 1;
+const int MOVE_MODE_SEARCH_LIGHT = 2;
+
+int maxLightValue = 0;
+int moveMode = -1;
+int isStarted = 0;
+int cnt = 0;
 int pwmInitialized = 0;
+int curMaxLightValue;
+const int EPSILON = 5;
 
 void startRightWheel()
 {
@@ -59,37 +70,153 @@ void stopLeftWheel()
  PWM_TIM4_Stop(_PWM_CHANNEL4);
 }
 
+void resetLightMaxPar()
+{ int idx;
+ curMaxLightValue = 0;
+ for (idx = 0; idx < MAX_LIGHT_VAL; idx ++ )
+ {
+ lightValueArr[idx] = 0;
+ }
+}
+
+void changeMode(int newMode)
+{
+ moveMode = newMode;
+ isStarted = 0;
+ switch (newMode)
+ {
+ case MOVE_MODE_BACK:
+ cnt = MAX_MOVE_BACK;
+ break;
+ case MOVE_MODE_CIRCLE:
+ cnt = MAX_MOVE_CIRCLE;
+ resetLightMaxPar();
+ maxLightValue = 0;
+ break;
+ case MOVE_MODE_SEARCH_LIGHT:
+ resetLightMaxPar();
+ break;
+
+
+ }
+}
+
+void startMode()
+{
+ int idx;
+ isStarted = 0;
+ switch (moveMode)
+ {
+ case MOVE_MODE_BACK:
+ startRightWheel();
+ startLeftWheel();
+ break;
+ case MOVE_MODE_CIRCLE:
+ stopLeftWheel();
+ startRightWheel();
+ break;
+ case MOVE_MODE_SEARCH_LIGHT:
+ startRightWheel();
+ stopLeftWheel();
+ break;
+ }
+}
+
+int calcLightVal()
+{
+ int idx;
+ int min = 30000;
+ int max = -1;
+ int minIdx = -1;
+ int maxIdx = -1;
+ int cnt = 0;
+ int avg = 0;
+ for (idx = 0; idx < MAX_LIGHT_VAL; idx ++)
+ {
+ if (lightValueArr[idx] > max)
+ {
+ max = lightValueArr[idx];
+ maxIdx = idx;
+ }
+
+ if (lightValueArr[idx] < min)
+ {
+ min = lightValueArr[idx];
+ minIdx = idx;
+ }
+ }
+
+
+ for (idx = 0; idx < MAX_LIGHT_VAL; idx ++)
+ {
+ if ( (idx != minIdx) && (idx != maxIdx))
+ {
+ cnt ++;
+ avg += lightValueArr[idx];
+ }
+ }
+ avg /= cnt;
+ return avg;
+}
+
+void updateLightArray()
+{
+ int idx;
+ for (idx = 0; idx < MAX_LIGHT_VAL - 1; idx ++)
+ {
+ lightValueArr[idx] = lightValueArr[idx + 1];
+ }
+ lightVal = ADC1_Get_Sample(11);
+ lightValueArr[MAX_LIGHT_VAL - 1]= lightVal;
+}
 
 void interruptTimer3() iv IVT_INT_TIM3 {
+
  TIM3_SR.UIF = 0;
 
  if (pwmInitialized)
  {
- if (moveInCircle)
+ if (!isStarted)
  {
- if (cntCircle > 0)
+ startMode();
+ }
+ if (MOVE_MODE_CIRCLE == moveMode)
  {
- cntCircle --;
+ if (cnt > 0)
+ {
+ cnt --;
+ updateLightArray();
+ curMaxLightValue = calcLightVal();
+ if (curMaxLightValue > maxLightValue)
+ {
+ maxLightValue = curMaxLightValue;
+ }
  }
  else
  {
- moveInCircle = 0;
- startRightWheel();
- startLeftWheel();
- cntMove = MAX_MOVE_BACK;
+ changeMode(MOVE_MODE_SEARCH_LIGHT);
  }
  }
- else
+ else if (MOVE_MODE_BACK == moveMode)
  {
- if (cntMove > 0)
+ if (cnt > 0)
  {
- cntMove--;
+ cnt --;
+
  }
  else
  {
- stopLeftWheel();
- moveInCircle = 1;
- cntCircle = MAX_MOVE_CIRCLE;
+ changeMode(MOVE_MODE_CIRCLE);
+ }
+ }
+ else if (MOVE_MODE_SEARCH_LIGHT == moveMode)
+ {
+ updateLightArray();
+ curMaxLightValue = calcLightVal();
+ if ( abs(curMaxLightValue - maxLightValue) < EPSILON)
+ {
+ changeMode(MOVE_MODE_BACK);
+
  }
  }
  }
@@ -97,21 +224,35 @@ void interruptTimer3() iv IVT_INT_TIM3 {
  if (UART3_Tx_Idle() == 1)
  {
  lightVal = ADC1_Get_Sample(11);
- UART3_Write_Text("Light: ");
+ UART3_Write_Text("\n\rLight: ");
  IntToStr(lightVal, output);
  UART3_Write_Text(output);
 
- UART3_Write_Text("\n\rMove in circle: ");
- IntToStr(moveInCircle, output);
+ UART3_Write_Text("CurLightValue: ");
+ IntToStr(curMaxLightValue, output);
  UART3_Write_Text(output);
 
- UART3_Write_Text("CntMove: ");
- IntToStr(cntMove, output);
+ UART3_Write_Text("MaxLightValue: ");
+ IntToStr(maxLightValue, output);
  UART3_Write_Text(output);
 
- UART3_Write_Text("CntCircle: ");
- IntToStr(cntCircle, output);
+ UART3_Write_Text("Cnt: ");
+ IntToStr(cnt, output);
  UART3_Write_Text(output);
+
+ UART3_Write_Text("Move:");
+ if (moveMode == MOVE_MODE_BACK)
+ {
+ UART3_Write_Text("BACK");
+ }
+ else if (moveMode == MOVE_MODE_CIRCLE)
+ {
+ UART3_Write_Text("CIRCLE");
+ }
+ else if (moveMode == MOVE_MODE_SEARCH_LIGHT)
+ {
+ UART3_Write_Text("SEARCH LIGHT");
+ }
 
  IntToStr(-1, output);
  UART3_Write_Text(output);
@@ -160,8 +301,8 @@ void initPWM()
 
 
 
+ changeMode(MOVE_MODE_CIRCLE);
  Delay_ms(100);
- moveInCircle = 1;
  pwmInitialized = 1;
 
 }
