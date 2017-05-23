@@ -8898,6 +8898,8 @@ cnt9_tim6_cnt_bit
 cnt9_tim7_cnt_bit
 cnt9_tim8_cnt_bit
 cnt9_tim9_cnt_bit
+cntcircle
+cntmove
 code
 code
 code0
@@ -31280,8 +31282,9 @@ matrix_transpose16
 matrix_transpose32
 max
 max_files
-max_gears1
 max_gears2
+max_move_back
+max_move_circle
 max_output
 mb
 mb
@@ -32494,6 +32497,8 @@ moe_tim8_bdtr_bit
 monitoract
 monitoract
 monitoract_bit
+moveback
+moveincircle
 mpe
 mpe
 mpe_bit
@@ -37399,7 +37404,8 @@ pendsvclr_bit
 pendsvset
 pendsvset
 pendsvset_bit
-period_frequency
+period_frequency1
+period_frequency2
 perschivl
 perschivl0
 perschivl0_bit
@@ -40007,6 +40013,7 @@ pwm_tim9_init
 pwm_tim9_set_duty
 pwm_tim9_start
 pwm_tim9_stop
+pwminitialized
 pwmperiod1
 pwmperiod2
 pwr_cr
@@ -43547,6 +43554,8 @@ start
 start_bit
 start_i2c1_cr1_bit
 start_i2c2_cr1_bit
+startleftwheel
+startrightwheel
 stbiterr
 stbiterr
 stbiterr_bit
@@ -43959,6 +43968,8 @@ stopf
 stopf_bit
 stopf_i2c1_sr1_bit
 stopf_i2c2_sr1_bit
+stopleftwheel
+stoprightwheel
 stpns
 stpns
 stpns_bit

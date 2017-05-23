@@ -1,7 +1,8 @@
-
 #define TIMER_SLOW_MODE 5
 #define TIMER_INTERRUPT_MODE 2
+#define DEBUG 1
 #define TIMER_DEBOUNCE_MODE  1
+
 
 
 unsigned scan_steps[] = {50, 200, 500, 1000};
@@ -25,32 +26,96 @@ unsigned int currentDuty1;
 unsigned int currentDuty2;
 unsigned int pwmPeriod1;
 unsigned int pwmPeriod2;
-const int PERIOD_FREQUENCY = 50;
-const int MAX_GEARS1 = 23;
-const int MAX_GEARS2 = 12;
+const int PERIOD_FREQUENCY1 = 33;
+const int PERIOD_FREQUENCY2 = 50;
+const int MAX_GEARS2 = 9;
+const int MAX_MOVE_CIRCLE = 100;
+const int MAX_MOVE_BACK = 100;
+
+int moveBack = 0;
+int moveInCircle = 0;
+int cntCircle = MAX_MOVE_CIRCLE;
+int cntMove = 0;
+int pwmInitialized = 0;
+
+void startRightWheel()
+{
+ PWM_TIM2_Start(_PWM_CHANNEL2, &_GPIO_MODULE_TIM2_CH2_PA1);
+}
+
+void stopRightWheel()
+{
+ PWM_TIM2_Stop(_PWM_CHANNEL2);
+}
+
+void startLeftWheel()
+{
+ PWM_TIM4_Start(_PWM_CHANNEL4, &_GPIO_MODULE_TIM4_CH4_PB9);
+}
+
+void stopLeftWheel()
+{
+ PWM_TIM4_Stop(_PWM_CHANNEL4);
+}
 
 
 void interruptTimer3() iv IVT_INT_TIM3 {
   TIM3_SR.UIF = 0;
 
+      if (pwmInitialized)
+      {
+        if (moveInCircle)
+        {
+         if (cntCircle > 0)
+         {
+          cntCircle --;
+         }
+         else
+         {
+          moveInCircle = 0;
+          startRightWheel();
+          startLeftWheel();
+          cntMove = MAX_MOVE_BACK;
+         }
+        }
+        else
+        {
+            if (cntMove > 0)
+            {
+             cntMove--;
+            }
+            else
+            {
+             stopLeftWheel();
+             moveInCircle = 1;
+             cntCircle =  MAX_MOVE_CIRCLE;
+            }
+        }
+      }
+      #if DEBUG
    if (UART3_Tx_Idle() == 1) //If data has been transmitted, send new data
      {
-     /*
-          pwmPeriod1
           lightVal = ADC1_Get_Sample(11);
+          UART3_Write_Text("Light: ");
           IntToStr(lightVal, output);
-          UART3_Write_Text(output);*/
-          int i;
-                              IntToStr(-1, output);
           UART3_Write_Text(output);
-          for (i =  5000; i < 50000; i += 5000)
-          {
-                    pwmPeriod1 =  PWM_TIM1_Init(i);
-                    IntToStr(pwmPeriod1, output);
-                    UART3_Write_Text(output);
+          
+          UART3_Write_Text("\n\rMove in circle: ");
+          IntToStr(moveInCircle, output);
+          UART3_Write_Text(output);
 
-                    }
+          UART3_Write_Text("CntMove: ");
+          IntToStr(cntMove, output);
+          UART3_Write_Text(output);
+          
+          UART3_Write_Text("CntCircle: ");
+          IntToStr(cntCircle, output);
+          UART3_Write_Text(output);
+
+          IntToStr(-1, output);
+          UART3_Write_Text(output);
      }
+#endif
 
 }
 
@@ -76,6 +141,7 @@ void initDebugMode ()
 
 void initADC()
 {
+ // Pin which is used to detect ADC value of light.
  GPIO_Analog_Input(&GPIOC_BASE, _GPIO_PINMASK_1);
    ADC_Set_Input_Channel(_ADC_CHANNEL_11);
   ADC1_Init();
@@ -83,16 +149,19 @@ void initADC()
 
 void initPWM()
 {  // length of period
-     pwmPeriod1 = PWM_TIM1_Init(PERIOD_FREQUENCY);
-     pwmPeriod2 = PWM_TIM2_Init(PERIOD_FREQUENCY);
-     currentDuty1 =  pwmPeriod1 / MAX_GEARS1;
+     pwmPeriod1 = PWM_TIM4_Init(PERIOD_FREQUENCY1 );
+     pwmPeriod2 = PWM_TIM2_Init(PERIOD_FREQUENCY2);
+     // tim 2 use for circle moving.
+     currentDuty1 =   pwmPeriod1 / MAX_GEARS2;
      currentDuty2 = pwmPeriod2 / MAX_GEARS2;
-     PWM_TIM1_Set_Duty(currentDuty1,  _PWM_NON_INVERTED, _PWM_CHANNEL1);
-     PWM_TIM2_Set_Duty(currentDuty2,  _PWM_NON_INVERTED, _PWM_CHANNEL3);
-          
-     PWM_TIM1_Start(_PWM_CHANNEL1, &_GPIO_MODULE_TIM1_CH1_PE9);
-     PWM_TIM2_Start(_PWM_CHANNEL3, &_GPIO_MODULE_TIM2_CH3_PB10);
+     PWM_TIM4_Set_Duty(currentDuty1,  _PWM_NON_INVERTED, _PWM_CHANNEL4);
+     PWM_TIM2_Set_Duty(currentDuty2,  _PWM_NON_INVERTED, _PWM_CHANNEL2);
+
+//     PWM_TIM4_Start(_PWM_CHANNEL4, &_GPIO_MODULE_TIM4_CH4_PB9);
+     //PWM_TIM2_Start(_PWM_CHANNEL2, &_GPIO_MODULE_TIM2_CH2_PA1);
      Delay_ms(100);
+     moveInCircle = 1;
+     pwmInitialized = 1;
 
 }
 
