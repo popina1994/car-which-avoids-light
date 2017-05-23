@@ -8901,6 +8901,7 @@ cnt9_tim6_cnt_bit
 cnt9_tim7_cnt_bit
 cnt9_tim8_cnt_bit
 cnt9_tim9_cnt_bit
+cntfound
 code
 code
 code0
@@ -29528,7 +29529,7 @@ leu6_bit
 leu7
 leu7_bit
 lf
-lightval
+lightvaldetected
 lightvaluearr
 line_ie
 line_ie
@@ -31286,12 +31287,13 @@ matrix_subtract32
 matrix_transpose16
 matrix_transpose32
 max
+max_arr_len_light_val
 max_files
-max_gears2
-max_light_val
+max_gears
 max_move_back
 max_move_circle
-max_output
+max_move_circle_half
+max_output_len
 maxlightvalue
 mb
 mb
@@ -32504,8 +32506,8 @@ moe_tim8_bdtr_bit
 monitoract
 monitoract
 monitoract_bit
-move_mode_back
 move_mode_circle
+move_mode_forward
 move_mode_search_light
 movemode
 mpe
