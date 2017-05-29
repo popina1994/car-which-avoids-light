@@ -1,26 +1,10 @@
 #line 1 "C:/Users/popina/Documents/MIPS/Light Moving Car.c"
 
 
-
-
-
-
-
-unsigned scan_steps[] = {50, 200, 500, 1000};
-
-
-
 unsigned timer_psc[] = { 9, 39, 95, 191, 374, 959 };
 unsigned timer_arr[] = { 59999, 59999, 62499, 62499, 63999, 62499 };
-int timer_times[]={ 5, 20, 50, 100, 200, 500 };
 
-
-
-
-sbit LD1 at ODR12_GPIOE_ODR_bit;
-sbit LD2 at ODR15_GPIOE_ODR_bit;
-
-
+const int TIMER_INTERRUPT_MODE = 2;
 
 int lightValDetected = -1;
 const int MAX_OUTPUT_LEN = 256;
@@ -50,7 +34,6 @@ int cnt = 0;
 int cntFound = -1;
 int pwmInitialized = 0;
 int curMaxLightValue;
-const int EPSILON = 20;
 
 void startRightWheel()
 {
@@ -282,8 +265,8 @@ void interruptTimer3() iv IVT_INT_TIM3 {
 void initTimer3(){
  RCC_APB1ENR.TIM3EN = 1;
  TIM3_CR1.CEN = 0;
- TIM3_PSC = timer_psc[ 2 ];
- TIM3_ARR = timer_arr[ 2 ];
+ TIM3_PSC = timer_psc[TIMER_INTERRUPT_MODE];
+ TIM3_ARR = timer_arr[TIMER_INTERRUPT_MODE];
  NVIC_IntEnable(IVT_INT_TIM3);
  TIM3_DIER.UIE = 1;
  TIM3_CR1.CEN = 1;
@@ -314,16 +297,11 @@ void initPWM()
  currentDuty1 = pwmPeriod1 / MAX_GEARS;
  currentDuty2 = pwmPeriod2 / MAX_GEARS;
 
-
-
-
-
  changeMode(MOVE_MODE_CIRCLE);
  Delay_ms(100);
  pwmInitialized = 1;
 
 }
-
 
 void main() {
 

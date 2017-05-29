@@ -1,25 +1,9 @@
-#define TIMER_SLOW_MODE 5
-#define TIMER_INTERRUPT_MODE 2
 #define DEBUG 1
-#define TIMER_DEBOUNCE_MODE  1
-
-
-
-unsigned scan_steps[] = {50, 200, 500, 1000};
-
-//this is config for different times for timer interrupt
 //                             5ms       20ms           50ms      100ms    200ms        500ms
 unsigned timer_psc[] = {       9,        39,            95,       191,     374,         959   };
 unsigned timer_arr[] = {       59999,    59999,         62499,    62499,   63999,       62499   };
-int timer_times[]={            5,        20,            50,       100,     200,         500     };
 
-// ************************************************** VARIABLES SECTION
-
-// pin definitions
-sbit LD1 at ODR12_GPIOE_ODR_bit;
-sbit LD2 at ODR15_GPIOE_ODR_bit;
-
-
+const int TIMER_INTERRUPT_MODE  = 2;
 
 int lightValDetected = -1;
 const int MAX_OUTPUT_LEN = 256;
@@ -49,7 +33,6 @@ int cnt = 0;
 int cntFound = -1;
 int pwmInitialized = 0;
 int curMaxLightValue;
-const int EPSILON = 20;
 
 void startRightWheel()
 {
@@ -312,18 +295,13 @@ void initPWM()
      // tim 2 use for circle moving (right wheel).
      currentDuty1 =   pwmPeriod1 / MAX_GEARS;
      currentDuty2 = pwmPeriod2 / MAX_GEARS;
-     //PWM_TIM4_Set_Duty(currentDuty1,  _PWM_NON_INVERTED, _PWM_CHANNEL4);
-     //PWM_TIM2_Set_Duty(currentDuty2,  _PWM_NON_INVERTED, _PWM_CHANNEL2);
-
-//     PWM_TIM4_Start(_PWM_CHANNEL4, &_GPIO_MODULE_TIM4_CH4_PB9);
-     //PWM_TIM2_Start(_PWM_CHANNEL2, &_GPIO_MODULE_TIM2_CH2_PA1);
+     
      changeMode(MOVE_MODE_CIRCLE);
      Delay_ms(100);
      pwmInitialized = 1;
 
 }
 
-// ************************************************** MAIN SECTION
 void main() {
 
      initDebugMode();

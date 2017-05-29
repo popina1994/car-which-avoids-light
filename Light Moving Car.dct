@@ -14223,7 +14223,6 @@ epnum3_otg_hs_hcchar6_bit
 epnum3_otg_hs_hcchar7_bit
 epnum3_otg_hs_hcchar8_bit
 epnum3_otg_hs_hcchar9_bit
-epsilon
 eptyp
 eptyp
 eptyp
@@ -29476,8 +29475,6 @@ lckk_gpioe_lckr_bit
 lckk_gpiof_lckr_bit
 lckk_gpiog_lckr_bit
 lckk_gpioh_lckr_bit
-ld1
-ld2
 ldexp
 ldiv
 lec
@@ -41536,7 +41533,6 @@ scan
 scan_adc2_cr1_bit
 scan_adc3_cr1_bit
 scan_bit
-scan_steps
 scb_aircr
 scb_aircrbits
 scb_ccr
@@ -46118,8 +46114,8 @@ timeout_bit
 timeout_i2c1_sr1_bit
 timeout_i2c2_sr1_bit
 timer_arr
+timer_interrupt_mode
 timer_psc
-timer_times
 tjtie
 tjtie
 tjtie_bit
