@@ -4869,7 +4869,6 @@ byte37_bit
 bytetohex
 bytetostr
 bytetostrwithzeros
-calclightval
 calm
 calm0
 calm0_bit
@@ -7612,7 +7611,6 @@ cgonak
 cgonak
 cgonak_bit
 cgonak_otg_hs_dctl_bit
-changemode
 character8x7
 chdis
 chdis
@@ -8557,7 +8555,6 @@ cnt
 cnt
 cnt
 cnt
-cnt
 cnt_h
 cnt_h
 cnt_h
@@ -8902,7 +8899,6 @@ cnt9_tim6_cnt_bit
 cnt9_tim7_cnt_bit
 cnt9_tim8_cnt_bit
 cnt9_tim9_cnt_bit
-cntfound
 code
 code
 code0
@@ -9491,7 +9487,6 @@ ctxpkt
 ctxpkt
 ctxpkt_bit
 ctxpkt_otg_hs_gusbcfg_bit
-curmaxlightvalue
 current
 current0
 current0_bit
@@ -11564,6 +11559,7 @@ delay2
 delay2_bit
 delay3
 delay3_bit
+detectionstart
 dev_id
 dev_id0
 dev_id0_bit
@@ -27186,11 +27182,9 @@ init_bit
 initf
 initf
 initf_bit
-initpwmlog
 inits
 inits
 inits_bit
-inittimer3
 inrq
 inrq
 inrq
@@ -28158,6 +28152,7 @@ isothren
 isothren
 isothren_bit
 ispunct
+ispwminitialized
 isrpending
 isrpending
 isrpending_bit
@@ -29527,8 +29522,11 @@ leu7
 leu7_bit
 lf
 lightdetectorinit
-lightvaldetected
+lightvalcalcandupdate
 lightvaluearr
+lightvaluecurmax
+lightvaluedetected
+lightvaluemax
 line_ie
 line_ie
 line_ie_bit
@@ -31285,12 +31283,7 @@ matrix_subtract32
 matrix_transpose16
 matrix_transpose32
 max
-max_arr_len_light_val
 max_files
-max_move_back
-max_move_circle
-max_move_circle_half
-maxlightvalue
 mb
 mb
 mb
@@ -31991,6 +31984,7 @@ mnu3_rtc_alrmbr_bit
 mo
 mo
 mo_bit
+modechange
 moder0
 moder0
 moder0
@@ -32455,6 +32449,7 @@ moder91_gpioe_moder_bit
 moder91_gpiof_moder_bit
 moder91_gpiog_moder_bit
 moder91_gpioh_moder_bit
+modestart
 modf
 modf_
 modf_
@@ -32502,9 +32497,6 @@ moe_tim8_bdtr_bit
 monitoract
 monitoract
 monitoract_bit
-move_mode_circle
-move_mode_forward
-move_mode_search_light
 movemode
 mpe
 mpe
@@ -40019,7 +40011,6 @@ pwm_tim9_set_duty
 pwm_tim9_start
 pwm_tim9_stop
 pwminit
-pwminitialized
 pwr_cr
 pwr_crbits
 pwr_csr
@@ -43558,7 +43549,6 @@ start
 start_bit
 start_i2c1_cr1_bit
 start_i2c2_cr1_bit
-startmode
 stbiterr
 stbiterr
 stbiterr_bit
@@ -43568,6 +43558,8 @@ stbiterrc_bit
 stbiterrie
 stbiterrie
 stbiterrie_bit
+stepcnt
+stepcnttodark
 stid
 stid
 stid
@@ -46106,9 +46098,7 @@ timeout
 timeout_bit
 timeout_i2c1_sr1_bit
 timeout_i2c2_sr1_bit
-timer_arr
-timer_interrupt_mode
-timer_psc
+timer3init
 tjtie
 tjtie
 tjtie_bit

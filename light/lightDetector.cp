@@ -1,7 +1,7 @@
 #line 1 "C:/Users/popina/Documents/MIPS/light/lightDetector.c"
 #line 1 "c:/users/popina/documents/mips/light/lightdetector.h"
 #line 1 "c:/users/popina/documents/mips/light/../util/util.h"
-#line 13 "c:/users/popina/documents/mips/light/lightdetector.h"
+#line 17 "c:/users/popina/documents/mips/light/lightdetector.h"
 void lightDetectorInit();
 
 unsigned int getLightVal();

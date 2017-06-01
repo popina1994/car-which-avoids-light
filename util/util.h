@@ -1,6 +1,8 @@
 #ifndef  _UTIL_H_
 #define _UTIL_H_
 
+#define DEBUG 1
+
 #define bool char
 #define true 1
 #define false 0
@@ -12,8 +14,7 @@
 #define PIN_NAME_EXP(PIN_TYPE) CONCAT_EXP(CONCAT_EXP(GPIO, PIN_TYPE), _BASE)
 #define PIN_IDX_EXP(PIN_IDX) CONCAT_EXP(_GPIO_PINMASK_, PIN_IDX)
 
-#define ADC_VERSION 1
-#define ADC_INIT CONCAT_EXP(CONCAT_EXP(ADC, ADC_VERSION), _Init)
-#define ADC_GET_SAMPLE CONCAT_EXP(CONCAT_EXP(ADC, ADC_VERSION), _Get_Sample)
+#define INST_STANDBY asm wfi
+#define CPU_DELAY_TIME_MS 100
 
 #endif // !1
