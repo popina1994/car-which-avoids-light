@@ -14,7 +14,7 @@ main
 			UARTx_Enable
 	initTimer3
 		NVIC_IntEnable
-	initADC
+	lightDetectorInit
 		GPIO_Analog_Input
 			GPIO_Config
 		ADC_Set_Input_Channel
@@ -50,14 +50,16 @@ interruptTimer3
 			PWM_TIM4_Stop
 				PWM_TIMx_Stop
 	updateLightArray
-		ADC1_Get_Sample
-			ADCx_Get_Sample
-				Delay_1us
+		getLightVal
+			ADC1_Get_Sample
+				ADCx_Get_Sample
+					Delay_1us
 	calcLightVal
 		__CC2DW
 	changeMode
-	UART3_Tx_Idle
-		UARTx_Tx_Idle
+	isBluetoothReadyForTransmission
+		UART3_Tx_Idle
+			UARTx_Tx_Idle
 	stringSendViaBluetooth
 		UART3_Write_Text
 			UARTx_Write_Text
@@ -66,5 +68,3 @@ interruptTimer3
 		IntToStr
 			WordToStr
 		UART3_Write_Text
-	UART3_Write_Text
-	IntToStr

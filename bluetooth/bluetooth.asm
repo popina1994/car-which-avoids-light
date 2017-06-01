@@ -69,3 +69,26 @@ LDR	LR, [SP, #0]
 ADD	SP, SP, #4
 BX	LR
 ; end of _intSendIntViaBluetooth
+_isBluetoothReadyForTransmission:
+;bluetooth.c,23 :: 		bool isBluetoothReadyForTransmission()
+SUB	SP, SP, #4
+STR	LR, [SP, #0]
+;bluetooth.c,25 :: 		if (UART3_Tx_Idle() == 1)
+BL	_UART3_Tx_Idle+0
+CMP	R0, #1
+IT	NE
+BNE	L_isBluetoothReadyForTransmission2
+;bluetooth.c,27 :: 		return true;
+MOVS	R0, #1
+IT	AL
+BAL	L_end_isBluetoothReadyForTransmission
+;bluetooth.c,28 :: 		}
+L_isBluetoothReadyForTransmission2:
+;bluetooth.c,29 :: 		return false;
+MOVS	R0, #0
+;bluetooth.c,30 :: 		}
+L_end_isBluetoothReadyForTransmission:
+LDR	LR, [SP, #0]
+ADD	SP, SP, #4
+BX	LR
+; end of _isBluetoothReadyForTransmission

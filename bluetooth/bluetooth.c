@@ -19,3 +19,12 @@ void intSendIntViaBluetooth(int val)
     IntToStr(val, outputBuffer);
     UART3_Write_Text(outputBuffer);
 }
+
+bool isBluetoothReadyForTransmission()
+{
+    if (UART3_Tx_Idle() == 1)
+    {
+        return true;
+    }
+    return false;
+}

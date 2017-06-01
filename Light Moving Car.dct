@@ -23963,6 +23963,7 @@ gencall_bit
 gencall_i2c1_sr2_bit
 gencall_i2c2_sr2_bit
 get_fosc_khz
+getlightval
 ginakeff
 ginakeff
 ginakeff
@@ -27182,7 +27183,6 @@ ineptxsa9_otg_hs_dieptxf7_bit
 init
 init
 init_bit
-initadc
 initf
 initf
 initf_bit
@@ -28139,6 +28139,7 @@ is_tft_rotated_180
 is_tft_set
 isalnum
 isalpha
+isbluetoothreadyfortransmission
 iscntrl
 isdigit
 isgraph
@@ -29525,6 +29526,7 @@ leu6_bit
 leu7
 leu7_bit
 lf
+lightdetectorinit
 lightvaldetected
 lightvaluearr
 line_ie
@@ -31288,7 +31290,6 @@ max_files
 max_move_back
 max_move_circle
 max_move_circle_half
-max_output_len
 maxlightvalue
 mb
 mb
@@ -36520,7 +36521,6 @@ otgint_bit
 otgint_otg_fs_gintmsk_bit
 otgint_otg_hs_gintmsk_bit
 otgint_otg_hs_gintsts_bit
-output
 outputbuffer
 over8
 over8

@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=wheel\right.c
+Value=light\lightDetector.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -16,19 +16,20 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=5
+Count=6
 File0=main.c
 File1=wheel\left.c
 File2=wheel\right.c
 File3=pwm\pwm.c
 File4=bluetooth\bluetooth.c
+File5=light\lightDetector.c
 [BINARIES]
 Count=0
 [IMAGES]
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=7
+Count=10
 File0=wheel\right.h
 File1=pwm\pwm.c
 File2=pwm\pwm.h
@@ -36,6 +37,9 @@ File3=main.c
 File4=bluetooth\bluetooth.c
 File5=wheel\left.c
 File6=wheel\right.c
+File7=bluetooth\bluetooth.h
+File8=light\lightDetector.c
+File9=light\lightdetector.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -43,7 +47,7 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=12
+Count=13
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\
 Path1=C:\Users\popina\Documents\MIPS\
 Path2=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\ST M4\
@@ -56,6 +60,7 @@ Path8=C:\Users\popina\Documents\MIPS\wheel\
 Path9=C:\Users\popina\Documents\MIPS\wheel\
 Path10=C:\Users\popina\Documents\MIPS\pwm\
 Path11=C:\Users\popina\Documents\MIPS\bluetooth\
+Path12=C:\Users\popina\Documents\MIPS\light\
 [HEADER_PATH]
 Count=9
 Path0=C:\Users\popina\Documents\MIPS\

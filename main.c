@@ -12,9 +12,7 @@ unsigned timer_arr[] = {       59999,    59999,         62499,    62499,   63999
 const int TIMER_INTERRUPT_MODE  = 2;
 
 int lightValDetected = -1;
-const int MAX_OUTPUT_LEN = 256;
 const int MAX_ARR_LEN_LIGHT_VAL = 3;
-char output[MAX_OUTPUT_LEN];
 int lightValueArr[MAX_ARR_LEN_LIGHT_VAL] = {0};
 
 const int MAX_MOVE_CIRCLE = 440;
@@ -137,7 +135,7 @@ void updateLightArray()
    {
        lightValueArr[idx] = lightValueArr[idx + 1];
    }
-   lightValDetected = ADC1_Get_Sample(11);
+   lightValDetected = getLightVal();
    lightValueArr[MAX_ARR_LEN_LIGHT_VAL - 1]= lightValDetected;
 }
 
@@ -193,52 +191,43 @@ void interruptTimer3() iv IVT_INT_TIM3 {
              }
           }
     }
-      #if DEBUG
-   if (UART3_Tx_Idle() == 1) //If data has been transmitted, send new data
-     {
-          stringSendViaBluetooth("\n\rLightValDetected: ");
-          intSendIntViaBluetooth(lightValDetected);
-          //UART3_Write_Text("\n\rLightValDetected: ");
-          //IntToStr(lightValDetected, output);
-          //UART3_Write_Text(output);
+#if DEBUG
+    if (isBluetoothReadyForTransmission() ) //If data has been transmitted, send new data
+    {
+      stringSendViaBluetooth("\n\rLightValDetected: ");
+      intSendIntViaBluetooth(lightValDetected);
 
-          UART3_Write_Text("CurLightValue: ");
-          IntToStr(curMaxLightValue, output);
-          UART3_Write_Text(output);
+      stringSendViaBluetooth("CurLightValue: ");
+      intSendIntViaBluetooth(curMaxLightValue);
 
-          UART3_Write_Text("MaxLightValue: ");
-          IntToStr(maxLightValue, output);
-          UART3_Write_Text(output);
+      stringSendViaBluetooth("MaxLightValue: ");
+      intSendIntViaBluetooth(maxLightValue);
 
-          UART3_Write_Text("Cnt: ");
-          IntToStr(cnt, output);
-          UART3_Write_Text(output);
+      stringSendViaBluetooth("Cnt: ");
+      intSendIntViaBluetooth(cnt);
 
-          UART3_Write_Text("CntFound: ");
-          IntToStr(cntFound, output);
-          UART3_Write_Text(output);
+      stringSendViaBluetooth("CntFound: ");
+      intSendIntViaBluetooth(cntFound);
 
-          UART3_Write_Text("Move:");
-          if (moveMode == MOVE_MODE_FORWARD)
-          {
-              UART3_Write_Text("FORWARD");
-          }
-          else if (moveMode == MOVE_MODE_CIRCLE)
-          {
-             UART3_Write_Text("CIRCLE");
-          }
-          else if (moveMode  == MOVE_MODE_SEARCH_LIGHT)
-          {
-             UART3_Write_Text("SEARCH LIGHT");
-          }
-
-          IntToStr(-1, output);
-          UART3_Write_Text(output);
-     }
+      stringSendViaBluetooth("Move:");
+      switch (moveMode)
+      {
+        case MOVE_MODE_FORWARD:
+          stringSendViaBluetooth("FORWARD");
+          break;
+        case MOVE_MODE_CIRCLE:
+          stringSendViaBluetooth("CIRCLE");
+          break;
+        case MOVE_MODE_SEARCH_LIGHT:
+          stringSendViaBluetooth("SEARCH_LIGHT");
+          break;
+        default:
+          stringSendViaBluetooth("UNINITIALIZED");
+      }
+      intSendIntViaBluetooth(-1);
+    }
 #endif
-
 }
-
 
 void initTimer3(){
   RCC_APB1ENR.TIM3EN = 1;  // Enable clock gating for timer module 3
@@ -250,29 +239,19 @@ void initTimer3(){
   TIM3_CR1.CEN = 1; // Enable timer
 }
 
-
-void initADC()
-{
- // Pin which is used to detect ADC value of light.
- GPIO_Analog_Input(&GPIOC_BASE, _GPIO_PINMASK_1);
-   ADC_Set_Input_Channel(_ADC_CHANNEL_11);
-  ADC1_Init();
-}
-
 void initPWMLog()
 {
     pwmInit();
     changeMode(MOVE_MODE_CIRCLE);
 
     pwmInitialized = 1;
-
 }
 
 void main() {
 
     bluetoothInit();
      initTimer3();
-     initADC();
+    lightDetectorInit();
      initPWMLog();
 
      while(1) {

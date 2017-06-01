@@ -36,9 +36,8 @@ static const unsigned int PWM_TIME_DELAY_MS = 1000;
 
 void pwmInit();
 #line 1 "c:/users/popina/documents/mips/bluetooth/bluetooth.h"
-
-
-
+#line 1 "c:/users/popina/documents/mips/bluetooth/../util/util.h"
+#line 6 "c:/users/popina/documents/mips/bluetooth/bluetooth.h"
 static const unsigned int BLUETOOTH_TIME_DELAY_MS = 1000;
 static const unsigned int OUTPUT_BUFFER_SIZE = 256;
 
@@ -47,11 +46,14 @@ void bluetoothInit();
 void stringSendViaBluetooth(const char* str);
 
 void intSendIntViaBluetooth(int val);
+
+ char  isBluetoothReadyForTransmission();
 #line 1 "c:/users/popina/documents/mips/light/lightdetector.h"
+#line 1 "c:/users/popina/documents/mips/light/../util/util.h"
+#line 13 "c:/users/popina/documents/mips/light/lightdetector.h"
+void lightDetectorInit();
 
-
-
-void initLightDetector();
+unsigned int getLightVal();
 #line 9 "C:/Users/popina/Documents/MIPS/main.c"
 unsigned timer_psc[] = { 9, 39, 95, 191, 374, 959 };
 unsigned timer_arr[] = { 59999, 59999, 62499, 62499, 63999, 62499 };
@@ -59,9 +61,7 @@ unsigned timer_arr[] = { 59999, 59999, 62499, 62499, 63999, 62499 };
 const int TIMER_INTERRUPT_MODE = 2;
 
 int lightValDetected = -1;
-const int MAX_OUTPUT_LEN = 256;
 const int MAX_ARR_LEN_LIGHT_VAL = 3;
-char output[MAX_OUTPUT_LEN];
 int lightValueArr[MAX_ARR_LEN_LIGHT_VAL] = {0};
 
 const int MAX_MOVE_CIRCLE = 440;
@@ -184,7 +184,7 @@ void updateLightArray()
  {
  lightValueArr[idx] = lightValueArr[idx + 1];
  }
- lightValDetected = ADC1_Get_Sample(11);
+ lightValDetected = getLightVal();
  lightValueArr[MAX_ARR_LEN_LIGHT_VAL - 1]= lightValDetected;
 }
 
@@ -241,51 +241,42 @@ void interruptTimer3() iv IVT_INT_TIM3 {
  }
  }
 
- if (UART3_Tx_Idle() == 1)
+ if (isBluetoothReadyForTransmission() )
  {
  stringSendViaBluetooth("\n\rLightValDetected: ");
  intSendIntViaBluetooth(lightValDetected);
 
+ stringSendViaBluetooth("CurLightValue: ");
+ intSendIntViaBluetooth(curMaxLightValue);
 
+ stringSendViaBluetooth("MaxLightValue: ");
+ intSendIntViaBluetooth(maxLightValue);
 
+ stringSendViaBluetooth("Cnt: ");
+ intSendIntViaBluetooth(cnt);
 
- UART3_Write_Text("CurLightValue: ");
- IntToStr(curMaxLightValue, output);
- UART3_Write_Text(output);
+ stringSendViaBluetooth("CntFound: ");
+ intSendIntViaBluetooth(cntFound);
 
- UART3_Write_Text("MaxLightValue: ");
- IntToStr(maxLightValue, output);
- UART3_Write_Text(output);
-
- UART3_Write_Text("Cnt: ");
- IntToStr(cnt, output);
- UART3_Write_Text(output);
-
- UART3_Write_Text("CntFound: ");
- IntToStr(cntFound, output);
- UART3_Write_Text(output);
-
- UART3_Write_Text("Move:");
- if (moveMode == MOVE_MODE_FORWARD)
+ stringSendViaBluetooth("Move:");
+ switch (moveMode)
  {
- UART3_Write_Text("FORWARD");
+ case MOVE_MODE_FORWARD:
+ stringSendViaBluetooth("FORWARD");
+ break;
+ case MOVE_MODE_CIRCLE:
+ stringSendViaBluetooth("CIRCLE");
+ break;
+ case MOVE_MODE_SEARCH_LIGHT:
+ stringSendViaBluetooth("SEARCH_LIGHT");
+ break;
+ default:
+ stringSendViaBluetooth("UNINITIALIZED");
  }
- else if (moveMode == MOVE_MODE_CIRCLE)
- {
- UART3_Write_Text("CIRCLE");
+ intSendIntViaBluetooth(-1);
  }
- else if (moveMode == MOVE_MODE_SEARCH_LIGHT)
- {
- UART3_Write_Text("SEARCH LIGHT");
- }
-
- IntToStr(-1, output);
- UART3_Write_Text(output);
- }
-
 
 }
-
 
 void initTimer3(){
  RCC_APB1ENR.TIM3EN = 1;
@@ -297,29 +288,19 @@ void initTimer3(){
  TIM3_CR1.CEN = 1;
 }
 
-
-void initADC()
-{
-
- GPIO_Analog_Input(&GPIOC_BASE, _GPIO_PINMASK_1);
- ADC_Set_Input_Channel(_ADC_CHANNEL_11);
- ADC1_Init();
-}
-
 void initPWMLog()
 {
  pwmInit();
  changeMode(MOVE_MODE_CIRCLE);
 
  pwmInitialized = 1;
-
 }
 
 void main() {
 
  bluetoothInit();
  initTimer3();
- initADC();
+ lightDetectorInit();
  initPWMLog();
 
  while(1) {
