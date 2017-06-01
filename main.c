@@ -1,3 +1,8 @@
+#include "wheel/left.h"
+#include "wheel/right.h"
+#include "bluetooth/bluetooth.h"
+#include "light/lightDetector.h"
+
 #define DEBUG 1
 //                             5ms       20ms           50ms      100ms    200ms        500ms
 unsigned timer_psc[] = {       9,        39,            95,       191,     374,         959   };
@@ -11,13 +16,6 @@ const int MAX_ARR_LEN_LIGHT_VAL = 3;
 char output[MAX_OUTPUT_LEN];
 int lightValueArr[MAX_ARR_LEN_LIGHT_VAL] = {0};
 
-unsigned int currentDuty1;
-unsigned int currentDuty2;
-unsigned int pwmPeriod1;
-unsigned int pwmPeriod2;
-const int PERIOD_FREQUENCY1 = 33;
-const int PERIOD_FREQUENCY2 = 50;
-const int MAX_GEARS = 9;
 const int MAX_MOVE_CIRCLE = 440;
 const int MAX_MOVE_CIRCLE_HALF = MAX_MOVE_CIRCLE / 2;
 const int MAX_MOVE_BACK = 50;
@@ -33,28 +31,6 @@ int cnt = 0;
 int cntFound = -1;
 int pwmInitialized = 0;
 int curMaxLightValue;
-
-void startRightWheel()
-{
- PWM_TIM2_Set_Duty(currentDuty2,  _PWM_NON_INVERTED, _PWM_CHANNEL2);
- PWM_TIM2_Start(_PWM_CHANNEL2, &_GPIO_MODULE_TIM2_CH2_PA1);
-}
-
-void stopRightWheel()
-{
- PWM_TIM2_Stop(_PWM_CHANNEL2);
-}
-
-void startLeftWheel()
-{
-PWM_TIM4_Set_Duty(currentDuty1,  _PWM_NON_INVERTED, _PWM_CHANNEL4);
- PWM_TIM4_Start(_PWM_CHANNEL4, &_GPIO_MODULE_TIM4_CH4_PB9);
-}
-
-void stopLeftWheel()
-{
- PWM_TIM4_Stop(_PWM_CHANNEL4);
-}
 
 void resetLightMaxPar()
 {   int idx;
@@ -82,7 +58,7 @@ void changeMode(int newMode)
   case MOVE_MODE_SEARCH_LIGHT:
        // reverse angle, it starts from zero and goes up to 2pi
        cntFound = MAX_MOVE_CIRCLE - cntFound;
-       
+
        if ( (double)(cntFound) / MAX_MOVE_CIRCLE <= 0.5f)
        {
            cnt = MAX_MOVE_CIRCLE_HALF + cntFound;
@@ -101,17 +77,17 @@ void startMode()
     switch (moveMode)
     {
       case MOVE_MODE_FORWARD:
-           startRightWheel();
-           startLeftWheel();
+           wheelRightStart();
+           wheelLeftStart();
             break;
       case MOVE_MODE_CIRCLE:
-           stopLeftWheel();
-           startRightWheel();
+           wheelLeftStop();
+           wheelRightStart();
            break;
       case MOVE_MODE_SEARCH_LIGHT:
 
-           startRightWheel();
-           stopLeftWheel();
+           wheelRightStart();
+           wheelLeftStop();
            break;
     }
 }
@@ -222,23 +198,23 @@ void interruptTimer3() iv IVT_INT_TIM3 {
           UART3_Write_Text("\n\rLightValDetected: ");
           IntToStr(lightValDetected, output);
           UART3_Write_Text(output);
-          
+
           UART3_Write_Text("CurLightValue: ");
           IntToStr(curMaxLightValue, output);
           UART3_Write_Text(output);
-          
+
           UART3_Write_Text("MaxLightValue: ");
           IntToStr(maxLightValue, output);
           UART3_Write_Text(output);
-          
+
           UART3_Write_Text("Cnt: ");
           IntToStr(cnt, output);
           UART3_Write_Text(output);
-          
+
           UART3_Write_Text("CntFound: ");
           IntToStr(cntFound, output);
           UART3_Write_Text(output);
-          
+
           UART3_Write_Text("Move:");
           if (moveMode == MOVE_MODE_FORWARD)
           {
@@ -262,7 +238,7 @@ void interruptTimer3() iv IVT_INT_TIM3 {
 
 
 void initTimer3(){
-  RCC_APB1ENR.TIM3EN = 1;  // Enable clock gating for timer module 2
+  RCC_APB1ENR.TIM3EN = 1;  // Enable clock gating for timer module 3
   TIM3_CR1.CEN = 0;// Disable timer
   TIM3_PSC = timer_psc[TIMER_INTERRUPT_MODE];  // Set timer prescaler.
   TIM3_ARR = timer_arr[TIMER_INTERRUPT_MODE]; //
@@ -289,16 +265,13 @@ void initADC()
 }
 
 void initPWM()
-{  // length of period
-     pwmPeriod1 = PWM_TIM4_Init(PERIOD_FREQUENCY1);
-     pwmPeriod2 = PWM_TIM2_Init(PERIOD_FREQUENCY2);
-     // tim 2 use for circle moving (right wheel).
-     currentDuty1 =   pwmPeriod1 / MAX_GEARS;
-     currentDuty2 = pwmPeriod2 / MAX_GEARS;
-     
-     changeMode(MOVE_MODE_CIRCLE);
-     Delay_ms(100);
-     pwmInitialized = 1;
+{
+    wheelLeftInit();
+    wheelRightInit();
+
+    changeMode(MOVE_MODE_CIRCLE);
+    Delay_ms(100);
+    pwmInitialized = 1;
 
 }
 

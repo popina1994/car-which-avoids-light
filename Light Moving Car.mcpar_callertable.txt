@@ -23,27 +23,28 @@ main
 			ADCx_Init
 				RCC_GetClocksFrequency
 	initPWM
-		PWM_TIM4_Init
-			PWM_TIMx_Init
-				Get_Fosc_kHz
-		PWM_TIM2_Init
-			PWM_TIMx_Init
+		wheelLeftInit
+			PWM_TIM4_Init
+				PWM_TIMx_Init
+					Get_Fosc_kHz
+		wheelRightInit
+			PWM_TIM4_Init
 		changeMode
 			resetLightMaxPar
 interruptTimer3
 	startMode
-		startRightWheel
+		wheelRightStart
 			PWM_TIM2_Set_Duty
 				PWM_TIMx_Set_Duty
 			PWM_TIM2_Start
 				PWM_TIMx_Start
 					GPIO_Alternate_Function_Enable
-		startLeftWheel
+		wheelLeftStart
 			PWM_TIM4_Set_Duty
 				PWM_TIMx_Set_Duty
 			PWM_TIM4_Start
 				PWM_TIMx_Start
-		stopLeftWheel
+		wheelLeftStop
 			PWM_TIM4_Stop
 				PWM_TIMx_Stop
 	updateLightArray

@@ -9540,8 +9540,6 @@ current8
 current8_bit
 current9
 current9_bit
-currentduty1
-currentduty2
 cwuf
 cwuf
 cwuf_bit
@@ -31286,7 +31284,6 @@ matrix_transpose32
 max
 max_arr_len_light_val
 max_files
-max_gears
 max_move_back
 max_move_circle
 max_move_circle_half
@@ -37412,8 +37409,6 @@ pendsvclr_bit
 pendsvset
 pendsvset
 pendsvset_bit
-period_frequency1
-period_frequency2
 perschivl
 perschivl0
 perschivl0_bit
@@ -40022,8 +40017,6 @@ pwm_tim9_set_duty
 pwm_tim9_start
 pwm_tim9_stop
 pwminitialized
-pwmperiod1
-pwmperiod2
 pwr_cr
 pwr_crbits
 pwr_csr
@@ -43562,9 +43555,7 @@ start
 start_bit
 start_i2c1_cr1_bit
 start_i2c2_cr1_bit
-startleftwheel
 startmode
-startrightwheel
 stbiterr
 stbiterr
 stbiterr_bit
@@ -43977,8 +43968,6 @@ stopf
 stopf_bit
 stopf_i2c1_sr1_bit
 stopf_i2c2_sr1_bit
-stopleftwheel
-stoprightwheel
 stpns
 stpns
 stpns_bit
@@ -48475,6 +48464,14 @@ wffrpr_bit
 wfr
 wfr
 wfr_bit
+wheelleftcurrentduty
+wheelleftinit
+wheelleftstart
+wheelleftstop
+wheelrightcurrentduty
+wheelrightinit
+wheelrightstart
+wheelrightstop
 wheight
 widbus
 widbus0

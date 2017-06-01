@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=Light Moving Car.c
+Value=main.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -16,16 +16,25 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=1
-File0=Light Moving Car.c
+Count=3
+File0=main.c
+File1=wheel\left.c
+File2=wheel\right.c
 [BINARIES]
 Count=0
 [IMAGES]
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=1
-File0=Light Moving Car.c
+Count=8
+File0=wheel\left.c
+File1=util\pwm.h
+File2=wheel\right.h
+File3=wheel\left.h
+File4=light\lightDetector.h
+File5=bluetooth\bluetooth.h
+File6=wheel\right.c
+File7=main.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -33,15 +42,27 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=4
+Count=10
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\
 Path1=C:\Users\popina\Documents\MIPS\
 Path2=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\ST M4\
 Path3=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Examples\ST\Other\USB HID Bootloader\Projects\STM32F407VG\
+Path4=C:\Users\popina\Documents\MIPS\
+Path5=C:\Users\popina\Documents\MIPS\
+Path6=C:\Users\popina\Documents\MIPS\
+Path7=C:\Users\popina\Documents\MIPS\
+Path8=C:\Users\popina\Documents\MIPS\wheel\
+Path9=C:\Users\popina\Documents\MIPS\wheel\
 [HEADER_PATH]
-Count=0
+Count=6
+Path0=C:\Users\popina\Documents\MIPS\
 [HEADERS]
-Count=0
+Count=5
+File0=util\pwm.h
+File1=wheel\right.h
+File2=wheel\left.h
+File3=light\lightDetector.h
+File4=bluetooth\bluetooth.h
 [PLDS]
 Count=0
 [Useses]
@@ -113,7 +134,7 @@ File63=USB
 File64=Vectors
 [EXPANDED_NODES]
 Node0=Sources
-Node1=Output Files
+Node1=Header Files
 Count=2
 [PROGRAMMER_OPTIONS]
 Value=SWD
