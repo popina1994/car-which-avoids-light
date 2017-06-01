@@ -4,7 +4,8 @@
 #line 6 "c:/users/popina/documents/mips/bluetooth/bluetooth.h"
 static const unsigned int BLUETOOTH_TIME_DELAY_MS = 1000;
 static const unsigned int OUTPUT_BUFFER_SIZE = 256;
-
+static const unsigned int BAUD_RATE = 9600;
+#line 25 "c:/users/popina/documents/mips/bluetooth/bluetooth.h"
 void bluetoothInit();
 
 void stringSendViaBluetooth(const char* str);
@@ -17,25 +18,25 @@ char outputBuffer[OUTPUT_BUFFER_SIZE];
 
 void bluetoothInit()
 {
- UART3_Init_Advanced(9600, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT, &_GPIO_MODULE_USART3_PD89);
- UART3_Enable();
+  UART3_Init_Advanced (BAUD_RATE, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT, & _GPIO_MODULE_USART3_PD89 );
+  UART3_Enable ();
  Delay_ms(BLUETOOTH_TIME_DELAY_MS);
 }
 
 void stringSendViaBluetooth(char* str)
 {
- UART3_Write_Text(str);
+  UART3_Write_Text (str);
 }
 
 void intSendIntViaBluetooth(int val)
 {
  IntToStr(val, outputBuffer);
- UART3_Write_Text(outputBuffer);
+  UART3_Write_Text (outputBuffer);
 }
 
  char  isBluetoothReadyForTransmission()
 {
- if (UART3_Tx_Idle() == 1)
+ if ( UART3_Tx_Idle () == 1)
  {
  return  1 ;
  }

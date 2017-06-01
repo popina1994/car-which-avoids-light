@@ -46099,6 +46099,7 @@ timeout_bit
 timeout_i2c1_sr1_bit
 timeout_i2c2_sr1_bit
 timer3init
+timerticked
 tjtie
 tjtie
 tjtie_bit

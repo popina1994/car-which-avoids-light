@@ -13,7 +13,8 @@ void main() {
     timer3Init();
     detectionStart();
 
-     while (true) {
+    while (true)
+    {
         INST_STANDBY;
         Delay_ms(CPU_DELAY_TIME_MS);
      }

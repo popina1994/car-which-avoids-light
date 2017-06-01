@@ -12,7 +12,8 @@ void pwmInit();
 #line 6 "c:/users/popina/documents/mips/bluetooth/bluetooth.h"
 static const unsigned int BLUETOOTH_TIME_DELAY_MS = 1000;
 static const unsigned int OUTPUT_BUFFER_SIZE = 256;
-
+static const unsigned int BAUD_RATE = 9600;
+#line 25 "c:/users/popina/documents/mips/bluetooth/bluetooth.h"
 void bluetoothInit();
 
 void stringSendViaBluetooth(const char* str);
@@ -22,7 +23,7 @@ void intSendIntViaBluetooth(int val);
  char  isBluetoothReadyForTransmission();
 #line 1 "c:/users/popina/documents/mips/light/lightdetector.h"
 #line 1 "c:/users/popina/documents/mips/light/../util/util.h"
-#line 17 "c:/users/popina/documents/mips/light/lightdetector.h"
+#line 15 "c:/users/popina/documents/mips/light/lightdetector.h"
 void lightDetectorInit();
 
 unsigned int getLightVal();
@@ -65,13 +66,14 @@ static const int MOVE_MODE_SEARCH_LIGHT = 2;
 extern  char  isPWMInitialized;
 extern  char  isStarted;
 extern unsigned int moveMode;
-extern int cnt;
-extern int cntFound;
+extern int stepCnt;
+extern int stepCntToDark;
 
 
 void modeStart(void);
 void modeChange(int newMode);
 void detectionStart(void);
+void timerTicked(void);
 #line 8 "C:/Users/popina/Documents/MIPS/main.c"
 void main() {
 
@@ -81,7 +83,8 @@ void main() {
  timer3Init();
  detectionStart();
 
- while ( 1 ) {
+ while ( 1 )
+ {
   asm wfi ;
  Delay_ms( 100 );
  }

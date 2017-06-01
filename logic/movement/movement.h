@@ -11,16 +11,17 @@ static const int MOVE_MODE_FORWARD = 0;
 static const int MOVE_MODE_CIRCLE = 1;
 static const int MOVE_MODE_SEARCH_LIGHT = 2;
 
-extern  bool isPWMInitialized;
+extern bool isPWMInitialized;
 extern bool isStarted;
 extern unsigned int moveMode;
-extern int cnt;
-extern int cntFound;
+extern int stepCnt;
+extern int stepCntToDark;
 
 
 void modeStart(void);
 void modeChange(int newMode);
 void detectionStart(void);
+void timerTicked(void);
 
 
 #endif

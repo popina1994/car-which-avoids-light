@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=logic\movement\movement.c
+Value=bluetooth\bluetooth.h
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -32,7 +32,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=7
+Count=11
 File0=pwm\pwm.c
 File1=main.c
 File2=timer\timer.c
@@ -40,6 +40,10 @@ File3=light\lightDetector.h
 File4=logic\light\lightDetection.h
 File5=logic\light\lightDetection.c
 File6=logic\movement\movement.c
+File7=wheel\wheel.h
+File8=wheel\right.c
+File9=bluetooth\bluetooth.c
+File10=bluetooth\bluetooth.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

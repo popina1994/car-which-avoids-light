@@ -2,10 +2,7 @@
 #include "../light/lightDetection.h"
 #include "../../wheel/left.h"
 #include "../../wheel/right.h"
-#include "../../pwm/pwm.h"
 #include "../../bluetooth/bluetooth.h"
-#include "../../light/lightDetector.h"
-#include "../../timer/timer.h"
 
 bool isPWMInitialized = false;
 bool isStarted = false;
@@ -62,14 +59,11 @@ void modeStart()
     }
 }
 
-
-void interruptTimer3() iv IVT_INT_TIM3 {
-
-    TIM3_SR.UIF = 0;
-
+void timerTicked()
+{
     if (isPWMInitialized)
     {
-        if (!isStarted )
+        if (!isStarted)
         {
             modeStart();
         }
@@ -114,8 +108,11 @@ void interruptTimer3() iv IVT_INT_TIM3 {
             }
         }
     }
-#if DEBUG
-    if (isBluetoothReadyForTransmission()) //If data has been transmitted, send new data
+
+    #if DEBUG
+    //If data has been transmitted, send new data
+    //
+    if (isBluetoothReadyForTransmission())
     {
         stringSendViaBluetooth("\n\rlightValueDetected: ");
         intSendIntViaBluetooth(lightValueDetected);
@@ -151,6 +148,7 @@ void interruptTimer3() iv IVT_INT_TIM3 {
     }
 #endif
 }
+
 
 void detectionStart()
 {

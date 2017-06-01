@@ -4,25 +4,25 @@ char outputBuffer[OUTPUT_BUFFER_SIZE];
 
 void bluetoothInit()
 {
-     UART3_Init_Advanced(9600, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT, &_GPIO_MODULE_USART3_PD89);
-     UART3_Enable();
+     UART_INIT_ADVANCED(BAUD_RATE, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT, &UART_MODULE_PIN_TR_RC);
+     UART_ENABLE();
      Delay_ms(BLUETOOTH_TIME_DELAY_MS);
 }
 
 void stringSendViaBluetooth(char* str)
 {
-    UART3_Write_Text(str);
+    UART_WRITE_TEXT(str);
 }
 
 void intSendIntViaBluetooth(int val)
 {
     IntToStr(val, outputBuffer);
-    UART3_Write_Text(outputBuffer);
+    UART_WRITE_TEXT(outputBuffer);
 }
 
 bool isBluetoothReadyForTransmission()
 {
-    if (UART3_Tx_Idle() == 1)
+    if (UART_TX_IDLE() == 1)
     {
         return true;
     }

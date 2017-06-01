@@ -8,9 +8,9 @@ static const unsigned int PWM_TIME_DELAY_MS = 1000;
 
 void pwmInit();
 #line 1 "c:/users/popina/documents/mips/pwm/../wheel/left.h"
-
-
-
+#line 1 "c:/users/popina/documents/mips/pwm/../wheel/wheel.h"
+#line 1 "c:/users/popina/documents/mips/pwm/../wheel/../util/util.h"
+#line 23 "c:/users/popina/documents/mips/pwm/../wheel/left.h"
 extern int wheelLeftCurrentDuty;
 static const int WHEEL_LEFT_FREQUENCY_PERIOD = 33;
 
@@ -22,11 +22,12 @@ void wheelLeftStart();
 
 void wheelLeftStop();
 #line 1 "c:/users/popina/documents/mips/pwm/../wheel/right.h"
-
-
-
+#line 1 "c:/users/popina/documents/mips/pwm/../wheel/wheel.h"
+#line 22 "c:/users/popina/documents/mips/pwm/../wheel/right.h"
 extern int wheelRightCurrentDuty;
 static const int WHEEL_RIGHT_FREQUENCY_PERIOD = 50;
+
+
 
 void wheelRightInit(const unsigned int maxGears);
 

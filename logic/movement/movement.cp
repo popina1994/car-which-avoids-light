@@ -13,13 +13,14 @@ static const int MOVE_MODE_SEARCH_LIGHT = 2;
 extern  char  isPWMInitialized;
 extern  char  isStarted;
 extern unsigned int moveMode;
-extern int cnt;
-extern int cntFound;
+extern int stepCnt;
+extern int stepCntToDark;
 
 
 void modeStart(void);
 void modeChange(int newMode);
 void detectionStart(void);
+void timerTicked(void);
 #line 1 "c:/users/popina/documents/mips/logic/movement/../light/lightdetection.h"
 
 
@@ -36,9 +37,9 @@ void updateLightArray();
 
 unsigned int lightValCalcAndUpdate();
 #line 1 "c:/users/popina/documents/mips/logic/movement/../../wheel/left.h"
-
-
-
+#line 1 "c:/users/popina/documents/mips/logic/movement/../../wheel/wheel.h"
+#line 1 "c:/users/popina/documents/mips/logic/movement/../../wheel/../util/util.h"
+#line 23 "c:/users/popina/documents/mips/logic/movement/../../wheel/left.h"
 extern int wheelLeftCurrentDuty;
 static const int WHEEL_LEFT_FREQUENCY_PERIOD = 33;
 
@@ -50,11 +51,12 @@ void wheelLeftStart();
 
 void wheelLeftStop();
 #line 1 "c:/users/popina/documents/mips/logic/movement/../../wheel/right.h"
-
-
-
+#line 1 "c:/users/popina/documents/mips/logic/movement/../../wheel/wheel.h"
+#line 22 "c:/users/popina/documents/mips/logic/movement/../../wheel/right.h"
 extern int wheelRightCurrentDuty;
 static const int WHEEL_RIGHT_FREQUENCY_PERIOD = 50;
+
+
 
 void wheelRightInit(const unsigned int maxGears);
 
@@ -63,20 +65,13 @@ void wheelRightInit(const unsigned int maxGears);
 void wheelRightStart();
 
 void wheelRightStop();
-#line 1 "c:/users/popina/documents/mips/logic/movement/../../pwm/pwm.h"
-
-
-
-static const unsigned int MAX_GEARS = 9;
-static const unsigned int PWM_TIME_DELAY_MS = 1000;
-
-void pwmInit();
 #line 1 "c:/users/popina/documents/mips/logic/movement/../../bluetooth/bluetooth.h"
 #line 1 "c:/users/popina/documents/mips/logic/movement/../../bluetooth/../util/util.h"
 #line 6 "c:/users/popina/documents/mips/logic/movement/../../bluetooth/bluetooth.h"
 static const unsigned int BLUETOOTH_TIME_DELAY_MS = 1000;
 static const unsigned int OUTPUT_BUFFER_SIZE = 256;
-
+static const unsigned int BAUD_RATE = 9600;
+#line 25 "c:/users/popina/documents/mips/logic/movement/../../bluetooth/bluetooth.h"
 void bluetoothInit();
 
 void stringSendViaBluetooth(const char* str);
@@ -84,23 +79,7 @@ void stringSendViaBluetooth(const char* str);
 void intSendIntViaBluetooth(int val);
 
  char  isBluetoothReadyForTransmission();
-#line 1 "c:/users/popina/documents/mips/logic/movement/../../light/lightdetector.h"
-#line 1 "c:/users/popina/documents/mips/logic/movement/../../light/../util/util.h"
-#line 17 "c:/users/popina/documents/mips/logic/movement/../../light/lightdetector.h"
-void lightDetectorInit();
-
-unsigned int getLightVal();
-#line 1 "c:/users/popina/documents/mips/logic/movement/../../timer/timer.h"
-
-
-
-
-static const unsigned TIMER3_PRESCALER[] = { 9, 39, 95, 191, 374, 959 };
-static const unsigned TIMER3_ARR[] = { 59999, 59999, 62499, 62499, 63999, 62499 };
-static const unsigned int TIMER3_INTERRUPT_MODE = 2;
-
-void timer3Init();
-#line 10 "C:/Users/popina/Documents/MIPS/logic/movement/movement.c"
+#line 7 "C:/Users/popina/Documents/MIPS/logic/movement/movement.c"
  char  isPWMInitialized =  0 ;
  char  isStarted =  0 ;
 unsigned int moveMode;
@@ -156,14 +135,11 @@ void modeStart()
  }
 }
 
-
-void interruptTimer3() iv IVT_INT_TIM3 {
-
- TIM3_SR.UIF = 0;
-
+void timerTicked()
+{
  if (isPWMInitialized)
  {
- if (!isStarted )
+ if (!isStarted)
  {
  modeStart();
  }
@@ -209,6 +185,9 @@ void interruptTimer3() iv IVT_INT_TIM3 {
  }
  }
 
+
+
+
  if (isBluetoothReadyForTransmission())
  {
  stringSendViaBluetooth("\n\rlightValueDetected: ");
@@ -245,6 +224,7 @@ void interruptTimer3() iv IVT_INT_TIM3 {
  }
 
 }
+
 
 void detectionStart()
 {

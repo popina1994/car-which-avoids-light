@@ -16,7 +16,7 @@ void updateLightArray();
 unsigned int lightValCalcAndUpdate();
 #line 1 "c:/users/popina/documents/mips/logic/light/../../light/lightdetector.h"
 #line 1 "c:/users/popina/documents/mips/logic/light/../../light/../util/util.h"
-#line 17 "c:/users/popina/documents/mips/logic/light/../../light/lightdetector.h"
+#line 15 "c:/users/popina/documents/mips/logic/light/../../light/lightdetector.h"
 void lightDetectorInit();
 
 unsigned int getLightVal();
