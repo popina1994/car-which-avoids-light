@@ -6,11 +6,11 @@
 extern int wheelLeftCurrentDuty;
 static const int WHEEL_LEFT_FREQUENCY_PERIOD = 33;
 
+void wheelLeftInit(const int unsigned int);
+
+
+
 void wheelLeftStart();
-
-
-
-void wheelLeftInit();
 
 void wheelLeftStop();
 #line 1 "c:/users/popina/documents/mips/wheel/right.h"
@@ -20,16 +20,39 @@ void wheelLeftStop();
 extern int wheelRightCurrentDuty;
 static const int WHEEL_RIGHT_FREQUENCY_PERIOD = 50;
 
-void wheelRightInit();
+void wheelRightInit(const unsigned int maxGears);
 
 
 
 void wheelRightStart();
 
 void wheelRightStop();
+#line 1 "c:/users/popina/documents/mips/pwm/pwm.h"
+
+
+
+static const unsigned int MAX_GEARS = 9;
+static const unsigned int PWM_TIME_DELAY_MS = 1000;
+
+void pwmInit();
 #line 1 "c:/users/popina/documents/mips/bluetooth/bluetooth.h"
+
+
+
+static const unsigned int BLUETOOTH_TIME_DELAY_MS = 1000;
+static const unsigned int OUTPUT_BUFFER_SIZE = 256;
+
+void bluetoothInit();
+
+void stringSendViaBluetooth(const char* str);
+
+void intSendIntViaBluetooth(int val);
 #line 1 "c:/users/popina/documents/mips/light/lightdetector.h"
-#line 8 "C:/Users/popina/Documents/MIPS/main.c"
+
+
+
+void initLightDetector();
+#line 9 "C:/Users/popina/Documents/MIPS/main.c"
 unsigned timer_psc[] = { 9, 39, 95, 191, 374, 959 };
 unsigned timer_arr[] = { 59999, 59999, 62499, 62499, 63999, 62499 };
 
@@ -220,9 +243,11 @@ void interruptTimer3() iv IVT_INT_TIM3 {
 
  if (UART3_Tx_Idle() == 1)
  {
- UART3_Write_Text("\n\rLightValDetected: ");
- IntToStr(lightValDetected, output);
- UART3_Write_Text(output);
+ stringSendViaBluetooth("\n\rLightValDetected: ");
+ intSendIntViaBluetooth(lightValDetected);
+
+
+
 
  UART3_Write_Text("CurLightValue: ");
  IntToStr(curMaxLightValue, output);
@@ -273,14 +298,6 @@ void initTimer3(){
 }
 
 
-void initDebugMode ()
-{
-
- UART3_Init_Advanced(9600, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT, &_GPIO_MODULE_USART3_PD89);
- Delay_ms(1000);
- UART3_Enable();
-}
-
 void initADC()
 {
 
@@ -289,23 +306,21 @@ void initADC()
  ADC1_Init();
 }
 
-void initPWM()
+void initPWMLog()
 {
- wheelLeftInit();
- wheelRightInit();
-
+ pwmInit();
  changeMode(MOVE_MODE_CIRCLE);
- Delay_ms(100);
+
  pwmInitialized = 1;
 
 }
 
 void main() {
 
- initDebugMode();
+ bluetoothInit();
  initTimer3();
  initADC();
- initPWM();
+ initPWMLog();
 
  while(1) {
  asm wfi;

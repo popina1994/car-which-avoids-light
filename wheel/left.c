@@ -1,12 +1,11 @@
 #include "left.h"
-#include "../util/pwm.h"
 
 int wheelLeftCurrentDuty;
 
-void wheelLeftInit()
+void wheelLeftInit(const unsigned int maxGears)
 {
      int pwmPeriod = PWM_TIM4_Init(WHEEL_LEFT_FREQUENCY_PERIOD);
-     wheelLeftCurrentDuty = pwmPeriod / MAX_GEARS;
+     wheelLeftCurrentDuty = pwmPeriod / maxGears;
 }
 
 void wheelLeftStart()

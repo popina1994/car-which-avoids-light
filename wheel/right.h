@@ -4,7 +4,7 @@
 extern int wheelRightCurrentDuty;
 static const int WHEEL_RIGHT_FREQUENCY_PERIOD = 50;
 
-void wheelRightInit();
+void wheelRightInit(const unsigned int maxGears);
 
 // @ref wheelRightInit should be called before calling this method.
 //

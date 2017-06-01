@@ -4002,6 +4002,7 @@ bl0_bit
 bl1
 bl1_bit
 blquantuses16bits
+bluetoothinit
 bljfif
 bmajorrev
 bminorrev
@@ -27182,11 +27183,10 @@ init
 init
 init_bit
 initadc
-initdebugmode
 initf
 initf
 initf_bit
-initpwm
+initpwmlog
 inits
 inits
 inits_bit
@@ -27225,6 +27225,7 @@ intlinesnum2
 intlinesnum2_bit
 intlinesnum3
 intlinesnum3_bit
+intsendintviabluetooth
 inttohex
 inttostr
 inttostrwithzeros
@@ -36520,6 +36521,7 @@ otgint_otg_fs_gintmsk_bit
 otgint_otg_hs_gintmsk_bit
 otgint_otg_hs_gintsts_bit
 output
+outputbuffer
 over8
 over8
 over8
@@ -40016,6 +40018,7 @@ pwm_tim9_init
 pwm_tim9_set_duty
 pwm_tim9_start
 pwm_tim9_stop
+pwminit
 pwminitialized
 pwr_cr
 pwr_crbits
@@ -43981,6 +43984,7 @@ strchr
 strcmp
 strcpy
 strcspn
+stringsendviabluetooth
 strlen
 strncat
 strncmp

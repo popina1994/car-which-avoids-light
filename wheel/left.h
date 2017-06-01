@@ -4,11 +4,11 @@
 extern int wheelLeftCurrentDuty;
 static const int WHEEL_LEFT_FREQUENCY_PERIOD = 33;
 
-void wheelLeftStart();
+void wheelLeftInit(const int unsigned int);
 
 // @ref wheelLeftInit should be called before calling this method.
 //
-void wheelLeftInit();
+void wheelLeftStart();
 
 void wheelLeftStop();
 

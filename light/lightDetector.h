@@ -1,4 +1,6 @@
-#ifndef  _LIGHT_H_
-#define __LIGHT_H_
+#ifndef  _LIGHT_DETECTOR_H_
+#define _LIGHT_DETECTOR_H_
+
+void initLightDetector();
 
 #endif // ! _LIGHT_H_

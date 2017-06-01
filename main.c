@@ -1,5 +1,6 @@
 #include "wheel/left.h"
 #include "wheel/right.h"
+#include "pwm/pwm.h"
 #include "bluetooth/bluetooth.h"
 #include "light/lightDetector.h"
 
@@ -195,9 +196,11 @@ void interruptTimer3() iv IVT_INT_TIM3 {
       #if DEBUG
    if (UART3_Tx_Idle() == 1) //If data has been transmitted, send new data
      {
-          UART3_Write_Text("\n\rLightValDetected: ");
-          IntToStr(lightValDetected, output);
-          UART3_Write_Text(output);
+          stringSendViaBluetooth("\n\rLightValDetected: ");
+          intSendIntViaBluetooth(lightValDetected);
+          //UART3_Write_Text("\n\rLightValDetected: ");
+          //IntToStr(lightValDetected, output);
+          //UART3_Write_Text(output);
 
           UART3_Write_Text("CurLightValue: ");
           IntToStr(curMaxLightValue, output);
@@ -248,14 +251,6 @@ void initTimer3(){
 }
 
 
-void initDebugMode ()
-{
-     // InitBluetoothUART3
-     UART3_Init_Advanced(9600, _UART_8_BIT_DATA, _UART_NOPARITY, _UART_ONE_STOPBIT, &_GPIO_MODULE_USART3_PD89);
-     Delay_ms(1000);
-     UART3_Enable();
-}
-
 void initADC()
 {
  // Pin which is used to detect ADC value of light.
@@ -264,23 +259,21 @@ void initADC()
   ADC1_Init();
 }
 
-void initPWM()
+void initPWMLog()
 {
-    wheelLeftInit();
-    wheelRightInit();
-
+    pwmInit();
     changeMode(MOVE_MODE_CIRCLE);
-    Delay_ms(100);
+
     pwmInitialized = 1;
 
 }
 
 void main() {
 
-     initDebugMode();
+    bluetoothInit();
      initTimer3();
      initADC();
-     initPWM();
+     initPWMLog();
 
      while(1) {
          asm wfi;

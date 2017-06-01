@@ -6,25 +6,20 @@
 extern int wheelRightCurrentDuty;
 static const int WHEEL_RIGHT_FREQUENCY_PERIOD = 50;
 
-void wheelRightInit();
+void wheelRightInit(const unsigned int maxGears);
 
 
 
 void wheelRightStart();
 
 void wheelRightStop();
-#line 1 "c:/users/popina/documents/mips/wheel/../util/pwm.h"
-
-
-
-static const int MAX_GEARS = 9;
-#line 4 "C:/Users/popina/Documents/MIPS/wheel/right.c"
+#line 3 "C:/Users/popina/Documents/MIPS/wheel/right.c"
 int wheelRightCurrentDuty;
 
-void wheelRightInit()
+void wheelRightInit(const unsigned int maxGears)
 {
- int pwmPeriod = PWM_TIM4_Init(WHEEL_RIGHT_FREQUENCY_PERIOD);
- wheelRightCurrentDuty = pwmPeriod / MAX_GEARS;
+ int pwmPeriod = PWM_TIM2_Init(WHEEL_RIGHT_FREQUENCY_PERIOD);
+ wheelRightCurrentDuty = pwmPeriod / maxGears;
 }
 
 void wheelRightStart()
