@@ -1,0 +1,36 @@
+\documentclass[hidelinks,a4paper]{report}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T2A]{fontenc} 
+\usepackage[serbianc]{babel}
+\usepackage[colorlinks = true,urlcolor = blue]{hyperref}
+\usepackage{setspace, amsmath, amsfonts, amssymb, amsthm, enumerate, graphicx, color}
+\usepackage[left=1in, right=1.0in, top=1.0in, bottom=1.0in]{geometry}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\begin{document}
+
+\include{Title}
+
+\tableofcontents
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Дефиниција}[chapter]
+\newtheorem{task}{}[section]
+\renewcommand{\bibname}{Литература}
+\newtheorem*{solution}{Решење}
+\pagenumbering{arabic}
+\renewcommand{\chaptername}{ }
+
+
+\include{Intro}
+
+\include{Description}	
+
+\include{Bibliography}
+
+
+
+
+\end{document}

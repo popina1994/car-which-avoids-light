@@ -1,0 +1,10 @@
+\select@language {serbianc}
+\contentsline {chapter}{\numberline {1}\IeC {\CYRU }\IeC {\cyrv }\IeC {\cyro }\IeC {\cyrd }}{2}{chapter.1}
+\contentsline {section}{\numberline {1.1}\IeC {\CYRI }\IeC {\cyrd }\IeC {\cyre }\IeC {\cyrje }\IeC {\cyra }}{2}{section.1.1}
+\contentsline {section}{\numberline {1.2}\IeC {\CYRF }\IeC {\cyru }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyro }\IeC {\cyrn }\IeC {\cyra }\IeC {\cyrl }\IeC {\cyrn }\IeC {\cyro }\IeC {\cyrs }\IeC {\cyrt }\IeC {\cyri }}{2}{section.1.2}
+\contentsline {chapter}{\numberline {2}\IeC {\CYRO }\IeC {\cyrp }\IeC {\cyri }\IeC {\cyrs } \IeC {\cyrs }\IeC {\cyri }\IeC {\cyrs }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrm }\IeC {\cyra }}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}\IeC {\CYRH }\IeC {\cyra }\IeC {\cyrr }\IeC {\cyrd }\IeC {\cyrv }\IeC {\cyre }\IeC {\cyrr }}{3}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Clicker2 \IeC {\cyrz }\IeC {\cyra } STM32F407VGT6}{3}{subsection.2.1.1}
+\contentsline {section}{\numberline {2.2}\IeC {\CYRS }\IeC {\cyro }\IeC {\cyrf }\IeC {\cyrt }\IeC {\cyrv }\IeC {\cyre }\IeC {\cyrr }}{4}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Programming environment}{4}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Ko\IeC {\cyrd } \IeC {\cyrn }\IeC {\cyra } \IeC {\cyrr }\IeC {\cyra }\IeC {\cyrz }\IeC {\cyrv }\IeC {\cyro }\IeC {\cyrje }\IeC {\cyrn }\IeC {\cyro }\IeC {\cyrje } \IeC {\cyrp }\IeC {\cyrl }\IeC {\cyro }\IeC {\cyrch }\IeC {\cyri }}{4}{subsection.2.2.2}
